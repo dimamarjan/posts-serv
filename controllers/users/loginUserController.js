@@ -14,7 +14,7 @@ const loginUserController = async (req, res, next) => {
     }
     const respData = await passwordChecker(user, req);
     if (respData) {
-      const token = await updateTokenModel(user.id);
+      const { token } = await updateTokenModel(user.id);
       return res.json({
         status: "success",
         code: OK,

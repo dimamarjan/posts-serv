@@ -1,9 +1,9 @@
 const Posts = require("../../schemas/posts");
-const authorParams = require("../../config/authorOptions");
+const options = require("../../config/mongooseOptions");
 
 const getPostInfoModule = async ({ id }) => {
   try {
-    return await Posts.findById(id).populate("author", authorParams);
+    return await Posts.findById(id).populate("author", options.authorParams);
   } catch (err) {
     throw new Error(err);
   }

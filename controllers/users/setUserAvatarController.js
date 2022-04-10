@@ -6,8 +6,7 @@ const setUserAvatarController = async (req, res, next) => {
   try {
     const respData = idChecker(req);
     if (respData) {
-      const { user } = req;
-      user.avatarURL = await setAvatarModel(req);
+      const user = await setAvatarModel(req);
       return res.json({
         status: "succsess",
         code: OK,

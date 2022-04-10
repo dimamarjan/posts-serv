@@ -1,7 +1,7 @@
 const Posts = require("../../schemas/posts");
 const { s3upload, s3delete } = require("../../utils/s3/s3");
 const { NOT_FOUND } = require("../../common/constants");
-const authorParams = require("../../config/authorOptions");
+const options = require("../../config/mongooseOptions");
 
 const changePostImageModel = async ({ oldImage }, postId, image) => {
   try {
@@ -13,7 +13,7 @@ const changePostImageModel = async ({ oldImage }, postId, image) => {
       post.images[oldImageIndex] = Location;
       const updatedPost = await Posts.findByIdAndUpdate(postId, post, {
         new: true,
-      }).populate("author", authorParams);
+      }).populate("author", options.authorParams);
       return updatedPost;
     }
     throw new Error(NOT_FOUND);

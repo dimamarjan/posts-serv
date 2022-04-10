@@ -1,10 +1,9 @@
 const Posts = require("../../schemas/posts");
-const { query, options } = require("../../config/statisticsOption");
+const options = require("../../config/mongooseOptions");
 
 const dateStatisticPostsModel = async () => {
   try {
-    const posts = await Posts.aggregate([query, options]);
-    return posts;
+    return await Posts.aggregate([options.statQuery, options.statOpt]);
   } catch (err) {
     throw new Error(err);
   }

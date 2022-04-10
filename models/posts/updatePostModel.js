@@ -1,12 +1,11 @@
 const Posts = require("../../schemas/posts");
-const authorParams = require("../../config/authorOptions");
+const options = require("../../config/mongooseOptions");
 
 const updatePostModel = async (postChanges, postId) => {
   try {
-    const post = await Posts.findByIdAndUpdate(postId, postChanges, {
+    return await Posts.findByIdAndUpdate(postId, postChanges, {
       new: true,
-    }).populate("author", authorParams);
-    return post;
+    }).populate("author", options.authorParams);
   } catch (err) {
     throw new Error(err);
   }

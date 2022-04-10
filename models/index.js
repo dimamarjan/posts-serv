@@ -3,7 +3,6 @@ const createUserModel = require("./users/createUserModel");
 const getUserByEmailModel = require("./users/getUserByEmailModel");
 const updateUserModel = require("./users/updateUserModel");
 const setAvatarModel = require("./users/setAvatarModel");
-const userCheckerModel = require("./users/userCheckerModel");
 const updateTokenModel = require("./users/updateUserTokenModel");
 const logOutUserModel = require("./users/logOutUserModel");
 
@@ -23,7 +22,6 @@ module.exports = {
   updateTokenModel,
   updateUserModel,
   setAvatarModel,
-  userCheckerModel,
   logOutUserModel,
 
   getPostsModel,

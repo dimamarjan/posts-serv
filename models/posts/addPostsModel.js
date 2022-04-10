@@ -1,7 +1,7 @@
 const { s3upload } = require("../../utils/s3/s3");
 const Posts = require("../../schemas/posts");
 const Users = require("../../schemas/users");
-const authorParams = require("../../config/authorOptions");
+const options = require("../../config/mongooseOptions");
 
 const addPostsModel = async (req) => {
   try {
@@ -16,7 +16,7 @@ const addPostsModel = async (req) => {
         })
       );
     }
-    const post = await Posts.create({
+    return await Posts.create({
       ...postData,
       images,
     }).then(async (post) => {
@@ -28,7 +28,7 @@ const addPostsModel = async (req) => {
           },
         },
         { new: true }
-      ).populate("author", authorParams);
+      ).populate("author", options.authorParams);
       await Users.findByIdAndUpdate(
         { _id: user.id },
         {
@@ -39,7 +39,6 @@ const addPostsModel = async (req) => {
       );
       return newPost;
     });
-    return post;
   } catch (err) {
     throw new Error(err);
   }

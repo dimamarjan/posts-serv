@@ -1,15 +1,19 @@
 const Users = require("../../schemas/users");
 const { s3upload, s3delete } = require("../../utils/s3/s3");
+const { options } = require("../../config/mongooseOptions");
 
 const setAvatarModel = async (req) => {
   try {
-    const { avatarURL } = req.user;
+    const { avatarURL, id } = req.user;
     if (avatarURL) {
       s3delete(avatarURL);
     }
-    const avatar = await s3upload(req.file);
-    await Users.updateOne({ _id: req.user.id }, { avatarURL: avatar.Location });
-    return avatar.Location;
+    const { Location } = await s3upload(req.file);
+    return await Users.findByIdAndUpdate(
+      id,
+      { avatarURL: Location },
+      { new: true }
+    ).populate("posts", "title");
   } catch (err) {
     throw new Error(err);
   }

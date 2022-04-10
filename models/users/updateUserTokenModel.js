@@ -9,8 +9,7 @@ const updateTokenModel = async (userId) => {
     const token = jwt.sign({ id: userId }, JWT_SECRET, {
       expiresIn: JWT_EXP,
     });
-    await User.updateOne({ _id: userId }, { token });
-    return token;
+    return await User.findByIdAndUpdate(userId, { token }, { new: true });
   } catch (err) {
     throw new Error(err);
   }
